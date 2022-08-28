@@ -38,4 +38,4 @@ jobs:
         with:
           context: "{{defaultContext}}:general"
           push: true
-          tags: nomoosey/moose-ubuntu:${GITHUB_REF_NAME}-$(date +'%Y-%m-%d')-${GITHUB_RUN_NUMBER}
+          tags: nomoosey/moose-ubuntu:${GITHUB_REF_NAME}-${GITHUB_RUN_NUMBER}
