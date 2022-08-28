@@ -26,7 +26,7 @@ jobs:
           name: Setup mount directories
           command: |
             ls
-            sudo mkdir -p /init/sonarr_config
+            mkdir -p init/sonarr_config
             ls /
       - run:
           name: Launch Docker container
