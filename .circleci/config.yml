@@ -26,11 +26,11 @@ jobs:
           name: Setup mount directories
           command: |
             ls
-            mkdir -p init/sonarr_config
-            ls /
+            mkdir sonarr_config
+            ls
       - run:
           name: Launch Docker container
-          command: cd sonarr && docker-compose up -d && docker ps && ls /init/sonarr_config
+          command: docker-compose -f sonarr/docker-compose.yaml up -d && ls sonarr_config
       - docker/build:
           image: sonarr-init 
           lint-dockerfile: true 
