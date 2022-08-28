@@ -11,11 +11,13 @@ jobs:
   sonarr-init-build:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/deploy:2022.08.1-node
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
+    # docker:
+    #   - image: cimg/deploy:2022.08.1-node
+    #     auth:
+    #       username: $DOCKERHUB_USERNAME
+    #       password: $DOCKERHUB_PASSWORD
+    machine:
+      image: ubuntu-2204:2022.07.1
     resource_class: small
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
@@ -29,21 +31,18 @@ jobs:
           name: Setup mount directories
           command: |
             ls
-            mkdir sonarr_config
             mkdir sonarr/sonarr_config
             ls
       - run:
           name: Launch Docker container
-          command: docker-compose -f sonarr/docker-compose.yaml up -d && ls sonarr_config
+          command: docker-compose -f sonarr/docker-compose.yaml up -d
       - run:
           name: Check for files
           command: |
             pwd
-            ls sonarr_config
             ls sonarr/sonarr_config
-            sleep 30
+            sleep 10
             docker inspect sonarr
-            ls sonarr_config
             ls sonarr/sonarr_config
       # - docker/build:
       #     image: nomoosey/sonarr-init 
