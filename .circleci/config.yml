@@ -34,16 +34,17 @@ jobs:
       - run:
           name: Launch Docker container
           command: docker-compose -f sonarr/docker-compose.yaml up -d && ls sonarr_config
-      - docker/build:
-          image: nomoosey/sonarr-init 
-          lint-dockerfile: true 
-          path: sonarr
+      # - docker/build:
+      #     image: nomoosey/sonarr-init 
+      #     lint-dockerfile: true 
+      #     path: sonarr
       # - run:
       #     name: Login to dockerhub
       #     command: docker login
       - run:
           name: Push to Dockerhub
           command: |
+            docker build . -t nomoosey/sonarr-init:$CIRCLE_SHA1 --no-cache -f sonarr/Dockerfile
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push nomoosey/sonarr-init:$CIRCLE_SHA1
 
