@@ -9,7 +9,7 @@ services:
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      - ./sonarr/sonarr_config:/config
+      - ./sonarr_config:/config
     ports:
       - 8989:8989
     restart: unless-stopped
