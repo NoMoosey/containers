@@ -23,6 +23,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: checkout
+        uses: actions/checkout@v3
 
       - name: Create mount directories
         run: sudo mkdir -p /init/sonarr_config && ls
