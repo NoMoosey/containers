@@ -30,6 +30,7 @@ jobs:
           command: |
             ls
             mkdir sonarr_config
+            mkdir sonarr/sonarr_config
             ls
       - run:
           name: Launch Docker container
@@ -38,8 +39,10 @@ jobs:
           name: Check for files
           command: |
             ls sonarr_config
+            ls sonarr/sonarr_config
             sleep 30
             ls sonarr_config
+            ls sonarr/sonarr_config
       # - docker/build:
       #     image: nomoosey/sonarr-init 
       #     lint-dockerfile: true 
