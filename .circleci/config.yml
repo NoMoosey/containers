@@ -13,6 +13,9 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       - image: cimg/deploy:2022.08.1-node
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     resource_class: small
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
@@ -35,6 +38,9 @@ jobs:
           image: sonarr-init 
           lint-dockerfile: true 
           path: sonarr
+      # - run:
+      #     name: Login to dockerhub
+      #     command: docker login
       - docker/push:
           image: sonarr-init 
 
@@ -43,4 +49,6 @@ jobs:
 workflows:
   init-container-builds:
     jobs:
-      - sonarr-init-build
+      - sonarr-init-build:
+          context:
+            - dockerhub
