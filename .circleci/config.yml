@@ -26,19 +26,26 @@ jobs:
           name: Setup mount directories
           command: |
             ls
-            mkdir -p init/sonarr_config
-            ls /
+            mkdir sonarr_config
+            ls
       - run:
           name: Launch Docker container
-          command: cd sonarr && docker-compose up -d && docker ps && ls /init/sonarr_config
+          command: docker-compose -f sonarr/docker-compose.yaml up -d && ls sonarr_config
       - docker/build:
           image: sonarr-init 
           lint-dockerfile: true 
           path: sonarr 
+      - run:
+          name: Push to DockerHub
+          command: |
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push nomoosey/sonarr-init:$CIRCLE_SHA1
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   init-container-builds:
     jobs:
-      - sonarr-init-build
+      - sonarr-init-build:
+          context:
+            - dockerhub
