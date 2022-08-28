@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  moose-ubuntu:
+  sonarr-init:
     runs-on: ubuntu-latest
     steps:
       -
@@ -25,7 +25,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Create mount directories
-        run: sudo mkdir -p /init/sonarr_config
+        run: sudo mkdir -p /init/sonarr_config && ls
       - name: Launch container
         run: cd sonarr && docker-compose up -d
       -
