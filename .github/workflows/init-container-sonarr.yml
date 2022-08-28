@@ -32,7 +32,8 @@ jobs:
       - run: ls -lh /
       - run: ls -lh /init/
       - name: Launch container
-        run: cd sonarr && docker-compose up -d
+#         run: cd sonarr && docker-compose up -d
+        run: docker run -d --name sonarr -v /init/sonarr_config:/config linuxserver/sonarr
       - run: ls -lh /init/sonarr_config
       -
         name: Build and push on tag
