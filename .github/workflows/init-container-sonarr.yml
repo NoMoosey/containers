@@ -29,11 +29,11 @@ jobs:
 
       - name: Create mount directories
         run: sudo mkdir -p /init/sonarr_config
-      - run: ll -h /
-      - run: ll -h /init/
+      - run: ls -lh /
+      - run: ls -lh /init/
       - name: Launch container
         run: cd sonarr && docker-compose up -d
-      - run: ll -h /init/sonarr_config
+      - run: ls -lh /init/sonarr_config
       -
         name: Build and push on tag
         if: github.ref_type == 'tag'
