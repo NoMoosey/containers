@@ -25,7 +25,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push on tag
-        if: GITHUB_REF_TYPE == "tag"
+        if: github.ref_type == "tag"
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:general"
@@ -33,7 +33,7 @@ jobs:
           tags: nomoosey/moose-ubuntu:latest,nomoosey/moose-ubuntu:${GITHUB_REF_NAME}
       -
         name: Build and push on branch
-        if: GITHUB_REF_TYPE == "branch"
+        if: github.ref_type == "branch"
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:general"
