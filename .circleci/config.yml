@@ -44,7 +44,7 @@ jobs:
       - run:
           name: Push to Dockerhub
           command: |
-            echo $$DOCKERHUB_PASSWORD | docker login -u $$DOCKERHUB_USERNAME --password-stdin
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push nomoosey/sonarr-init:$CIRCLE_SHA1
 
 # Invoke jobs via workflows
