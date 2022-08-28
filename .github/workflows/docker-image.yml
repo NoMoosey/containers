@@ -30,7 +30,7 @@ jobs:
         with:
           context: "{{defaultContext}}:general"
           push: true
-          tags: nomoosey/moose-ubuntu:latest,nomoosey/moose-ubuntu:${GITHUB_REF_NAME}
+          tags: nomoosey/moose-ubuntu:latest,nomoosey/moose-ubuntu:$GITHUB_REF_NAME
       -
         name: Build and push on branch
         if: github.ref_type == 'branch'
@@ -38,4 +38,4 @@ jobs:
         with:
           context: "{{defaultContext}}:general"
           push: true
-          tags: nomoosey/moose-ubuntu:${GITHUB_REF_NAME}-${GITHUB_RUN_NUMBER}
+          tags: nomoosey/moose-ubuntu:$GITHUB_REF_NAME-$GITHUB_RUN_NUMBER
