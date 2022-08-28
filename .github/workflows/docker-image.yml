@@ -33,7 +33,7 @@ jobs:
           tags: nomoosey/moose-ubuntu:latest,nomoosey/moose-ubuntu:${GITHUB_REF_NAME}
       -
         name: Build and push on branch
-        if: ${GITHUB_REF_TYPE} == "branch"
+        if: GITHUB_REF_TYPE == "branch"
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:general"
