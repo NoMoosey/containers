@@ -38,6 +38,7 @@ jobs:
       - run:
           name: Check for files
           command: |
+            pwd
             ls sonarr_config
             ls sonarr/sonarr_config
             sleep 30
