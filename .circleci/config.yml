@@ -22,14 +22,15 @@ jobs:
           version: 20.10.14
           docker_layer_caching: true
       # - docker/install-docker-tools
-      - run: mkdir -p /init/sonarr_config
+      - run:
+          name: Setup mount directories
+          command: |
+            ls
+            mkdir -p /init/sonarr_config
+            ls /
       - run:
           name: Launch Docker container
           command: cd sonarr && docker-compose up -d
-      - run:
-          command: |
-            ls
-            ls /
       - docker/build:
           image: sonarr-init 
           lint-dockerfile: true 
