@@ -34,7 +34,9 @@ jobs:
       - docker/build:
           image: sonarr-init 
           lint-dockerfile: true 
-          path: sonarr 
+          path: sonarr
+      - docker/push:
+          image: sonarr-init 
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
