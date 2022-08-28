@@ -30,7 +30,7 @@ jobs:
             ls /
       - run:
           name: Launch Docker container
-          command: cd sonarr && docker-compose up -d && ls /init/sonarr_config
+          command: cd sonarr && docker-compose up -d && docker ps && ls /init/sonarr_config
       - docker/build:
           image: sonarr-init 
           lint-dockerfile: true 

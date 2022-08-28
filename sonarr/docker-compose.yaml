@@ -10,6 +10,6 @@ services:
       - TZ=Europe/London
     volumes:
       - /init/sonarr_config:/config
-    # ports:
-    #   - 8989:8989
+    ports:
+      - 8989:8989
     restart: unless-stopped
