@@ -34,6 +34,12 @@ jobs:
       - run:
           name: Launch Docker container
           command: docker-compose -f sonarr/docker-compose.yaml up -d && ls sonarr_config
+      - run:
+          name: Check for files
+          command: |
+            ls /sonarr_config
+            sleep 30
+            ls /sonarr_config
       # - docker/build:
       #     image: nomoosey/sonarr-init 
       #     lint-dockerfile: true 
