@@ -12,16 +12,16 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/base:stable
+      - image: cimg/deploy:2022.08.1-node
     resource_class: small
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.14
-          docker_layer_caching: true
-      - docker/install-docker-tools
+      # - setup_remote_docker:
+      #     version: 20.10.14
+      #     docker_layer_caching: true
+      # - docker/install-docker-tools
       - run:
           name: Launch Docker container
           command: cd sonarr && docker-compose up -d
