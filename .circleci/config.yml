@@ -41,6 +41,7 @@ jobs:
             ls sonarr_config
             ls sonarr/sonarr_config
             sleep 30
+            docker inspect sonarr
             ls sonarr_config
             ls sonarr/sonarr_config
       # - docker/build:
