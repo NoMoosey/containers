@@ -54,9 +54,9 @@ jobs:
       - run:
           name: Push to Dockerhub
           command: |
-            docker build . -t nomoosey/sonarr-init:$CIRCLE_SHA1 --no-cache -f sonarr/Dockerfile
+            docker build . -t nomoosey/sonarr-init:$CIRCLE_SHA1 -t nomoosey/sonarr-init:latest --no-cache -f sonarr/Dockerfile
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-            docker push nomoosey/sonarr-init:$CIRCLE_SHA1
+            docker push nomoosey/sonarr-init --all-tags
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
