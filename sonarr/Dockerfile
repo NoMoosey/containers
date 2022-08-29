@@ -3,7 +3,7 @@ WORKDIR /init_config
 COPY sonarr/sonarr_config sonarr
 
 WORKDIR /init_config/sonarr
-RUN chown -R abc:abc *
+RUN chown -R 1000:1000 *
 
 RUN apt update && apt install -y rsync
 
