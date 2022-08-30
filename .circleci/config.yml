@@ -145,6 +145,7 @@ jobs:
             docker inspect nzb
             ls -lh nzb/nzb_config
             sudo chown -R root:root nzb/nzb_config/*
+            sudo chmod 777 -R nzb/nzb_config/*
       # - docker/build:
       #     image: nomoosey/nzb-init 
       #     lint-dockerfile: true 
