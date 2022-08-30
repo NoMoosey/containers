@@ -141,7 +141,7 @@ jobs:
           command: |
             pwd
             ls nzb/nzb_config
-            sleep 10
+            sleep 30
             docker inspect nzb
             ls nzb/nzb_config
       # - docker/build:
