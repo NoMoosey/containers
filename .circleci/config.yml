@@ -114,23 +114,25 @@ workflows:
   init-container-builds:
     jobs:
       - sonarr-init-build:
-          branches:
-            only:
-              - main
-              - sonarr*
-          tags:
-            only:
-              - "*"
+          filters:
+            branches:
+              only:
+                - main
+                - /^sonarr/
+            tags:
+              only:
+                - "*"
           context:
             - dockerhub
       - radarr-init-build:
-          branches:
-            only:
-              - main
-              - radarr*
-          tags:
-            only:
-              - "*"
+          filters:
+            branches:
+              only:
+                - main
+                - /^radarr/
+            tags:
+              only:
+                - "*"
           context:
             - dockerhub
 
