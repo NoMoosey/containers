@@ -1,0 +1,13 @@
+---
+version: "2.1"
+services:
+  nzb:
+    image: lscr.io/linuxserver/nzb:latest
+    container_name: nzb
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./nzb_config:/config
+    restart: unless-stopped
