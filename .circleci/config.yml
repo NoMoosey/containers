@@ -118,7 +118,7 @@ workflows:
             branches:
               only:
                 - main
-                - /^sonarr/
+                - /sonarr.*/
             tags:
               only:
                 - "*"
@@ -129,7 +129,7 @@ workflows:
             branches:
               only:
                 - main
-                - /^radarr/
+                - /radarr.*/
             tags:
               only:
                 - "*"
