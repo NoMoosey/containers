@@ -2,7 +2,7 @@
 version: "2.1"
 services:
   nzb:
-    image: lscr.io/linuxserver/nzb:latest
+    image: lscr.io/linuxserver/sabnzbd:latest
     container_name: nzb
     environment:
       - PUID=1000
