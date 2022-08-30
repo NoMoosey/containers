@@ -143,7 +143,7 @@ jobs:
             ls nzb/nzb_config
             sleep 30
             docker inspect nzb
-            ls nzb/nzb_config
+            ls -lh nzb/nzb_config
       # - docker/build:
       #     image: nomoosey/nzb-init 
       #     lint-dockerfile: true 
@@ -152,9 +152,12 @@ jobs:
       #     name: Login to dockerhub
       #     command: docker login
       - run:
+          name: Build image
+          command: docker build . -t nomoosey/nzb-init:$CIRCLE_SHA1 -t nomoosey/nzb-init:latest --no-cache -f nzb/Dockerfile
+
+      - run:
           name: Push to Dockerhub
           command: |
-            docker build . -t nomoosey/nzb-init:$CIRCLE_SHA1 -t nomoosey/nzb-init:latest --no-cache -f nzb/Dockerfile
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push nomoosey/nzb-init --all-tags
 
