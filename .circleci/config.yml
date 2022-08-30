@@ -54,9 +54,109 @@ jobs:
       - run:
           name: Push to Dockerhub
           command: |
-            docker build . -t nomoosey/sonarr-init:$CIRCLE_SHA1 --no-cache -f sonarr/Dockerfile
+            docker build . -t nomoosey/sonarr-init:$CIRCLE_SHA1 -t nomoosey/sonarr-init:latest --no-cache -f sonarr/Dockerfile
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-            docker push nomoosey/sonarr-init:$CIRCLE_SHA1
+            docker push nomoosey/sonarr-init --all-tags
+
+  radarr-init-build:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    # docker:
+    #   - image: cimg/deploy:2022.08.1-node
+    #     auth:
+    #       username: $DOCKERHUB_USERNAME
+    #       password: $DOCKERHUB_PASSWORD
+    machine:
+      image: ubuntu-2204:2022.07.1
+    resource_class: medium
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      # - setup_remote_docker:
+      #     version: 20.10.14
+      #     docker_layer_caching: true
+      # - docker/install-docker-tools
+      - run:
+          name: Setup mount directories
+          command: |
+            ls
+            mkdir radarr/radarr_config
+            ls
+      - run:
+          name: Launch Docker container
+          command: docker-compose -f radarr/docker-compose.yaml up -d
+      - run:
+          name: Check for files
+          command: |
+            pwd
+            ls radarr/radarr_config
+            sleep 10
+            docker inspect radarr
+            ls radarr/radarr_config
+      # - docker/build:
+      #     image: nomoosey/radarr-init 
+      #     lint-dockerfile: true 
+      #     path: radarr
+      # - run:
+      #     name: Login to dockerhub
+      #     command: docker login
+      - run:
+          name: Push to Dockerhub
+          command: |
+            docker build . -t nomoosey/radarr-init:$CIRCLE_SHA1 -t nomoosey/radarr-init:latest --no-cache -f radarr/Dockerfile
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push nomoosey/radarr-init --all-tags
+
+  nzb-init-build:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    # docker:
+    #   - image: cimg/deploy:2022.08.1-node
+    #     auth:
+    #       username: $DOCKERHUB_USERNAME
+    #       password: $DOCKERHUB_PASSWORD
+    machine:
+      image: ubuntu-2204:2022.07.1
+    resource_class: medium
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      # - setup_remote_docker:
+      #     version: 20.10.14
+      #     docker_layer_caching: true
+      # - docker/install-docker-tools
+      - run:
+          name: Setup mount directories
+          command: |
+            ls
+            mkdir nzb/nzb_config
+            ls
+      - run:
+          name: Launch Docker container
+          command: docker-compose -f nzb/docker-compose.yaml up -d
+      - run:
+          name: Check for files
+          command: |
+            pwd
+            ls nzb/nzb_config
+            sleep 10
+            docker inspect nzb
+            ls nzb/nzb_config
+      # - docker/build:
+      #     image: nomoosey/nzb-init 
+      #     lint-dockerfile: true 
+      #     path: nzb
+      # - run:
+      #     name: Login to dockerhub
+      #     command: docker login
+      - run:
+          name: Push to Dockerhub
+          command: |
+            docker build . -t nomoosey/nzb-init:$CIRCLE_SHA1 -t nomoosey/nzb-init:latest --no-cache -f nzb/Dockerfile
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push nomoosey/nzb-init --all-tags
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -64,5 +164,35 @@ workflows:
   init-container-builds:
     jobs:
       - sonarr-init-build:
+          filters:
+            branches:
+              only:
+                - main
+                - /sonarr.*/
+            tags:
+              only:
+                - "*"
+          context:
+            - dockerhub
+      - radarr-init-build:
+          filters:
+            branches:
+              only:
+                - main
+                - /radarr.*/
+            tags:
+              only:
+                - "*"
+          context:
+            - dockerhub
+      - nzb-init-build:
+          filters:
+            branches:
+              only:
+                - main
+                - /nzb.*/
+            tags:
+              only:
+                - "*"
           context:
             - dockerhub
